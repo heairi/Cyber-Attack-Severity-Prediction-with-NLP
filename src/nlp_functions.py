@@ -1,7 +1,7 @@
 # NLP Functions
 
 # Function to remove geographic info from descriptions
-def remove_geo_entities(text):
+def remove_geo_entities(text,nlp):
     doc = nlp(text)
     cleaned = text
 
