@@ -1,5 +1,6 @@
 # Machine Learning Functions
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold, train_test_split, cross_val_score
 from sklearn.metrics import (
@@ -8,6 +9,7 @@ from sklearn.metrics import (
     r2_score
 )
 import shap
+import seaborn as sns
 
 # ==============================================================================
 # CLEAN DATA 
@@ -131,18 +133,13 @@ def evaluate_cv(
     cv,
     model_name="Model"
 ):
-    """
-    Evaluate a regression model using cross-validation
-    and print average scores for MAE, RMSE, and R².
-    """
-
     metrics = [
         "neg_mean_absolute_error",
         "neg_root_mean_squared_error",
         "r2"
     ]
 
-    results = {}
+    results = []
 
     for metric in metrics:
 
@@ -154,20 +151,17 @@ def evaluate_cv(
             scoring=metric
         )
 
-        mean_score = np.mean(scores)
-
-        # Convert sklearn's negative error metrics back to positive
         if metric.startswith("neg_"):
-            mean_score = -mean_score
+            scores = -scores
 
-        print(
-            f"{model_name} Training Data: "
-            f"{metric} = {mean_score:.3f}"
-        )
+        results.append({
+            "Model": model_name,
+            "Metric": metric,
+            "Mean": np.mean(scores),
+            "SD": np.std(scores)
+        })
 
-        results[metric] = mean_score
-
-    return results
+    return pd.DataFrame(results)
 
 def evaluate_regression_model(y_true, y_pred, model_name="Model"):
     """
@@ -203,6 +197,90 @@ def evaluate_regression_model(y_true, y_pred, model_name="Model"):
         "RMSE": rmse,
         "R²": r2
     }
+
+def compare_models(models):
+    """
+    Compare regression models and return a results table.
+
+    Parameters
+    ----------
+    models : dict
+        {
+            "Model A": (model, X_test, y_test),
+            ...
+        }
+    """
+
+    results = []
+
+    for name, (model, X_test, y_test) in models.items():
+
+        y_pred = model.predict(X_test)
+
+        results.append({
+            "Model": name,
+            "MAE": mean_absolute_error(y_test, y_pred),
+            "RMSE": mean_squared_error(
+                y_test,
+                y_pred
+            ) ** 0.5,
+            "R²": r2_score(y_test, y_pred)
+        })
+
+    results_table = (
+        pd.DataFrame(results)
+        .sort_values("R²", ascending=False)
+        .reset_index(drop=True)
+    )
+
+    print(results_table.round(3))
+
+    return results_table
+
+def save_model_results(
+    results_table,
+    filepath
+):
+    """
+    Save model comparison table.
+    """
+
+    results_table.round(3).to_csv(
+        filepath,
+        index=False
+    )
+
+    print(f"Saved results to {filepath}")
+
+import pickle
+
+def save_models(
+    models,
+    output_dir="model_output"
+):
+    """
+    Save fitted models as pickle files.
+
+    Parameters
+    ----------
+    models : dict
+        {
+            "Model A": model,
+            ...
+        }
+    """
+
+    for name, model in models.items():
+
+        filename = (
+            f"{output_dir}/"
+            f"{name.lower().replace(' ', '_')}.pkl"
+        )
+
+        with open(filename, "wb") as f:
+            pickle.dump(model, f)
+
+        print(f"Saved {filename}")
 
 # ==============================================================================
 # VISUALIZATIONS
@@ -320,3 +398,70 @@ def save_shap_summary(
     )
 
     plt.close()
+
+def plot_model_comparison_panels(
+    results_table,
+    title="XGBoost Model Performance Comparison",
+    filepath=None
+):
+    """
+    Create a 3-panel comparison plot showing
+    MAE, RMSE, and R² separately for each model.
+
+    Parameters
+    ----------
+    results_table : pd.DataFrame
+        Must contain columns:
+        ['Model', 'MAE', 'RMSE', 'R²']
+
+    title : str
+        Figure title.
+
+    filepath : str, optional
+        Save location for figure.
+    """
+
+    metrics = ["MAE", "RMSE", "R²"]
+
+    fig, axes = plt.subplots(
+        1,
+        len(metrics),
+        figsize=(12, 4)
+    )
+
+    for ax, metric in zip(axes, metrics):
+
+        sns.barplot(
+            data=results_table,
+            x="Model",
+            y=metric,
+            hue="Model",
+            dodge=False,
+            legend=False,
+            ax=ax
+        )
+
+        ax.set_title(metric)
+        ax.set_xlabel("")
+        ax.set_ylabel(metric)
+
+        # Add values above bars
+        #for container in ax.containers:
+        #    ax.bar_label(
+        #        container,
+        #        fmt="%.3f",
+        #        padding=3
+        #    )
+
+    fig.suptitle(title)
+
+    plt.tight_layout()
+
+    if filepath:
+        plt.savefig(
+            filepath,
+            dpi=300,
+            bbox_inches="tight"
+        )
+
+    plt.show()

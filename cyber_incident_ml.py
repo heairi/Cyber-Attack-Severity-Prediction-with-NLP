@@ -23,9 +23,7 @@
 # ==============================================================================
 from pathlib import Path
 import pandas as pd
-import numpy as np
 from xgboost import XGBRegressor
-from sklearn.model_selection import cross_val_score
 from src.ml_functions import (
     clean_column_names,
     filter_rare_groups,
@@ -35,10 +33,11 @@ from src.ml_functions import (
     evaluate_regression_model,
     split_train_test,
     save_actual_vs_predicted_plot,
-    save_shap_summary)
-import matplotlib.pyplot as plt
-import shap
-import pickle
+    save_shap_summary,
+    compare_models,
+    plot_model_comparison_panels,
+    save_model_results,
+    save_models)
 
 # ==============================================================================
 # LOAD DATA 
@@ -197,7 +196,7 @@ X_topic = pd.concat(
 # Clean column names for XGBoost
 X_topic = clean_column_names(X_topic)
 
-# Encode y labels
+# Encode y label
 y = filtered_orig["impact_indicator_score"]
 
 # Train-test split
@@ -237,7 +236,7 @@ save_actual_vs_predicted_plot(
     y_test_B,
     y_pred_B,
     "Model B XGBoost Regression",
-    "model_output/impact_score_modelB_XGBoost_scatterplot_existing_predictors.png"
+    "model_output/impact_score_modelB_XGBoost_scatterplot_topic_predictors.png"
 )
 
 # SHAP
@@ -256,6 +255,130 @@ save_shap_summary(
     model=xgbB,
     X=X_train_B,
     title="Model B SHAP Values",
-    filepath="model_output/impact_score_XGBoost_latent_topic_predictors_SHAP.png",
+    filepath="model_output/impact_score_modelB_XGBoost_latent_topic_predictors_SHAP.png",
     rename_dict=topic_rename
 )
+
+
+# ==============================================================================
+# MODEL C: COMBINED (EXISTING CATEGORIES + LATENT TOPICS)
+# ==============================================================================
+# Build data set
+existing_lookup = (
+    dyadic_data_orig_matched[
+        ["incident_id"] + existing_features
+    ]
+    .drop_duplicates("incident_id")
+)
+
+topic_combined = filtered_topic.merge(
+    existing_lookup,
+    on="incident_id",
+    how="left"
+)
+
+X_controls = pd.get_dummies(
+    topic_combined[control_features],
+    drop_first=True
+)
+
+X_existing_ops = topic_combined[
+    existing_features
+]
+
+X_topics = pd.get_dummies(
+    topic_combined["topic"],
+    prefix="topic",
+    drop_first=True
+)
+
+X_combined = pd.concat(
+    [
+        X_controls,
+        X_existing_ops,
+        X_topics
+    ],
+    axis=1
+)
+
+X_combined = clean_column_names(X_combined)
+
+# Encode y label
+y = topic_combined["impact_indicator_score"]
+
+# Train-test split
+X_train_C, X_test_C, y_train_C, y_test_C = split_train_test(
+    X_combined,
+    y,
+    model_name="Model C"
+)
+
+# Define model
+xgbC = XGBRegressor(**xgb_params)
+
+# 5-fold cross-validation
+cv_results_A = evaluate_cv(
+    xgbC,
+    X_train_C,
+    y_train_C,
+    cv,
+    model_name="Model C"
+)
+
+# Fit model
+xgbC.fit(X_train_C, y_train_C)
+
+# Predictions
+y_pred_C = xgbC.predict(X_test_C)
+
+# Evaluation
+results_C = evaluate_regression_model(
+    y_test_C,
+    y_pred_C,
+    model_name="Model C"
+)
+
+# Scatter plot
+save_actual_vs_predicted_plot(
+    y_test_C,
+    y_pred_C,
+    "Model C XGBoost Regression",
+    "model_output/impact_score_modelC_XGBoost_scatterplot_combined_predictors.png"
+)
+
+# SHAP
+save_shap_summary(
+    model=xgbC,
+    X=X_train_C,
+    title="Model C SHAP Values",
+    filepath="model_output/impact_score_modelC_XGBoost_combined_predictors_SHAP.png",
+    rename_dict=topic_rename
+)
+
+# ==============================================================================
+# COMPARE MODELS
+# ==============================================================================
+models = {
+    "Model A": (xgbA, X_test_A, y_test_A),
+    "Model B": (xgbB, X_test_B, y_test_B),
+    "Model C": (xgbC, X_test_C, y_test_C)
+}
+
+results_table = compare_models(models)
+
+plot_model_comparison_panels(
+    results_table,
+    title="Impact Score Prediction Performance",
+    filepath="model_output/xgboost_model_comparison_panels.png"
+)
+
+save_model_results(
+    results_table,
+    "model_output/xgboost_model_comparison.csv"
+)
+
+save_models({
+    "Model A": xgbA,
+    "Model B": xgbB,
+    "Model C": xgbC
+})
