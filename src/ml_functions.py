@@ -1,6 +1,7 @@
 # Machine Learning Functions
+import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, train_test_split, cross_val_score
 from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
@@ -71,7 +72,7 @@ def filter_rare_groups(
     return filtered_df
 
 # ==============================================================================
-# ML PARAMTERS 
+# ML 
 # ==============================================================================
 xgb_params = dict(
     n_estimators=500,
@@ -94,9 +95,80 @@ from sklearn.metrics import (
     r2_score
 )
 
+def split_train_test(
+    X,
+    y,
+    test_size=0.2,
+    random_state=99,
+    model_name="Model"
+):
+    """
+    Split features and target into train and test sets
+    and print dataset dimensions.
+    """
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=test_size,
+        random_state=random_state
+    )
+
+    print(f"{model_name} Feature Training Data Shape: {X_train.shape}")
+    print(f"{model_name} Feature Test Data Shape: {X_test.shape}")
+    print(f"{model_name} Target Training Data Shape: {y_train.shape}")
+    print(f"{model_name} Target Test Data Shape: {y_test.shape}")
+
+    return X_train, X_test, y_train, y_test
+
 # ==============================================================================
 # MODEL EVALUATION
 # ==============================================================================
+def evaluate_cv(
+    model,
+    X_train,
+    y_train,
+    cv,
+    model_name="Model"
+):
+    """
+    Evaluate a regression model using cross-validation
+    and print average scores for MAE, RMSE, and R².
+    """
+
+    metrics = [
+        "neg_mean_absolute_error",
+        "neg_root_mean_squared_error",
+        "r2"
+    ]
+
+    results = {}
+
+    for metric in metrics:
+
+        scores = cross_val_score(
+            model,
+            X_train,
+            y_train,
+            cv=cv,
+            scoring=metric
+        )
+
+        mean_score = np.mean(scores)
+
+        # Convert sklearn's negative error metrics back to positive
+        if metric.startswith("neg_"):
+            mean_score = -mean_score
+
+        print(
+            f"{model_name} Training Data: "
+            f"{metric} = {mean_score:.3f}"
+        )
+
+        results[metric] = mean_score
+
+    return results
+
 def evaluate_regression_model(y_true, y_pred, model_name="Model"):
     """
     Calculate and print regression metrics.
@@ -190,7 +262,13 @@ def save_actual_vs_predicted_plot(
 
     plt.close()
 
-def save_shap_summary(model, X, title, filepath):
+def save_shap_summary(
+    model,
+    X,
+    title,
+    filepath,
+    rename_dict=None
+):
     """
     Generate and save a SHAP summary plot.
 
@@ -199,7 +277,7 @@ def save_shap_summary(model, X, title, filepath):
     model : fitted model
         Trained XGBoost model.
 
-    X : pandas.DataFrame
+    X : pd.DataFrame
         Feature matrix used to calculate SHAP values.
 
     title : str
@@ -207,13 +285,27 @@ def save_shap_summary(model, X, title, filepath):
 
     filepath : str
         Output file path.
+
+    rename_dict : dict, optional
+        Dictionary mapping original feature names
+        to display names for the SHAP plot.
     """
+
+    # SHAP must use the original feature matrix
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(X)
 
+    # Create display copy for the plot
+    X_display = X.copy()
+
+    if rename_dict is not None:
+        X_display = X_display.rename(
+            columns=rename_dict
+        )
+
     shap.summary_plot(
         shap_values,
-        X,
+        X_display,
         show=False
     )
 

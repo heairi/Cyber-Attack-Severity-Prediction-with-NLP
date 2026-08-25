@@ -24,15 +24,16 @@
 from pathlib import Path
 import pandas as pd
 import numpy as np
-from xgboost import XGBClassifier, XGBRegressor
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split, cross_val_score
+from xgboost import XGBRegressor
+from sklearn.model_selection import cross_val_score
 from src.ml_functions import (
     clean_column_names,
     filter_rare_groups,
     xgb_params,
     cv,
+    evaluate_cv,
     evaluate_regression_model,
+    split_train_test,
     save_actual_vs_predicted_plot,
     save_shap_summary)
 import matplotlib.pyplot as plt
@@ -124,36 +125,23 @@ X_existing = clean_column_names(X_existing)
 y = filtered_orig["impact_indicator_score"]
 
 # Split into training and testing data
-X_train_A , X_test_A, y_train_A, y_test_A = train_test_split(
+X_train_A, X_test_A, y_train_A, y_test_A = split_train_test(
     X_existing,
     y,
-    test_size=0.2,
-    random_state = 99,
+    model_name="Model A"
 )
-
-print(f"Model A Feature Training Data Shape: {X_train_A.shape}")
-print(f"Model A Feature Test Data Shape: {X_test_A.shape}")
-print(f"Model A Target Training Data Shape: {y_train_A.shape}")
-print(f"Model A Target Test Data Shape: {y_test_A.shape}")
 
 # Define model
 xgbA = XGBRegressor(**xgb_params)
 
 # 5-fold cross-validation
-for metric in [
-    "neg_mean_absolute_error",
-    "neg_root_mean_squared_error",
-    "r2"
-]:
-    scores = cross_val_score(
-        xgbA,
-        X_train_A,
-        y_train_A,
-        cv=cv,
-        scoring=metric
-    )
-
-    print(f"Model A Training Data: {metric}, {np.mean(scores)}")
+cv_results_A = evaluate_cv(
+    xgbA,
+    X_train_A,
+    y_train_A,
+    cv,
+    model_name="Model A"
+)
 
 # Fit model
 xgbA.fit(X_train_A, y_train_A)
@@ -173,7 +161,7 @@ save_actual_vs_predicted_plot(
     y_test_A,
     y_pred_A,
     "Model A XGBoost Regression",
-    "model_output/impact_score_XGBoost_scatterplot_existing_predictors.png"
+    "model_output/impact_score_modelA_XGBoost_scatterplot_existing_predictors.png"
 )
 
 # SHAP
@@ -181,9 +169,93 @@ save_shap_summary(
     model=xgbA,
     X=X_train_A,
     title="Model A SHAP Values",
-    filepath="model_output/impact_score_XGBoost_existing_predictors_SHAP.png"
+    filepath="model_output/impact_score_modelA_XGBoost_existing_predictors_SHAP.png"
 )
 
 # ==============================================================================
 # MODEL B: LATENT CYBER OPERATION TOPICS
 # ==============================================================================
+# One-hot encode control variables
+X_controls = pd.get_dummies(
+    filtered_topic[control_features],
+    drop_first=True
+)
+
+# One-hot encode BERTopic assignments
+X_topics = pd.get_dummies(
+    filtered_topic["topic"],
+    prefix="topic",
+    drop_first=True
+)
+
+# Combine controls and topics
+X_topic = pd.concat(
+    [X_controls, X_topics],
+    axis=1
+)
+
+# Clean column names for XGBoost
+X_topic = clean_column_names(X_topic)
+
+# Encode y labels
+y = filtered_orig["impact_indicator_score"]
+
+# Train-test split
+X_train_B, X_test_B, y_train_B, y_test_B = split_train_test(
+    X_topic,
+    y,
+    model_name="Model B"
+)
+
+# Define model
+xgbB = XGBRegressor(**xgb_params)
+
+# 5-fold cross-validation
+cv_results_A = evaluate_cv(
+    xgbB,
+    X_train_B,
+    y_train_B,
+    cv,
+    model_name="Model B"
+)
+
+# Fit model
+xgbB.fit(X_train_B, y_train_B)
+
+# Predictions
+y_pred_B = xgbB.predict(X_test_B)
+
+# Evaluation
+results_B = evaluate_regression_model(
+    y_test_B,
+    y_pred_B,
+    model_name="Model B"
+)
+
+# Scatter plot
+save_actual_vs_predicted_plot(
+    y_test_B,
+    y_pred_B,
+    "Model B XGBoost Regression",
+    "model_output/impact_score_modelB_XGBoost_scatterplot_existing_predictors.png"
+)
+
+# SHAP
+topic_rename = {
+    "topic_1_0": "Malware & Cyber Espionage",
+    "topic_2_0": "Ransomware & Cyber Extortion",
+    "topic_3_0": "DDoS & Service Disruption Campaigns",
+    "topic_4_0": "Data Breaches & Information Exposure",
+    "topic_5_0": "Institutional Ransomware Attacks",
+    "topic_6_0": "Vulnerability Exploitation & Theft",
+    "topic_7_0": "Surveillance & Mobile Espionage",
+    "topic_8_0": "Government Intelligence Operations"
+}
+
+save_shap_summary(
+    model=xgbB,
+    X=X_train_B,
+    title="Model B SHAP Values",
+    filepath="model_output/impact_score_XGBoost_latent_topic_predictors_SHAP.png",
+    rename_dict=topic_rename
+)
