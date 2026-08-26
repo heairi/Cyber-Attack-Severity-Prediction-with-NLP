@@ -5,7 +5,7 @@
 - [Overview](#overview)
 - [Business Problem](#business-problem)
 - [Project Components](#project-components)
-    - [NLP Topic Modeling Pipeline](#NLP-Topic-Modeling-Pipeline)
+    - [NLP Topic Modeling Pipeline](#1-nlp-topic-modeling-pipeline)
 
 
 
