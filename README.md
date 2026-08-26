@@ -4,17 +4,20 @@
 
 - #overview
 - #business-problem
-- [Project Components](#projectLP Topic Modeling Pipeline](#1-nlp-topic-modeling-pipeline)
-    - [Extracted Cyber Operation Types](# [3. Machine Learning: Predicting Cyber Incident Severity](#3-machine-learning-predicting-cyber-incident-severity)
-    - [Model A: Structured: Combined Features- #machine-learning-framework
-- #results
-  - [Interpretation
-- [Explainable-ai
-- #project-structure
-- #key-findings
-- [Why Recruiters Should Care](#why-hnical Skills Demonstrated](#technical-skills-demonstrated-learningage Processing](#natural-languagestatisticsable AI](#ex- #data-visualization
+- [Project Components](#projectp-topic-modeling-pipeline
+  - [Extracted Cyber Operation Types](#extracted-cyberData Analysis](#2-exploratory-data-analysisicting Cyber Incident Severity](#3-machine-learning-tured-features
+    - [Model B-nlp-derived-features
+    - [Model-c-combined-features
+- [Machine learning-framework
+- [Results](#resultsrpretation](#interpretationI](#explaint Structure](#projectndings](#keyy Recruiters Should Care
+- [Technical Skills Demonstrated]( - [Machine Learning
+  - [Natural Language-processing
+  - [statistics
+  - [Explainable-ai-skills
+  - [data-visualization
   - #software-engineering
 - #author
+
 
 ## Overview
 
@@ -169,7 +172,7 @@ The strongest model was the structured baseline, explaining 76% of variance in i
 
 The most interesting finding is that BERTopic-derived features alone explained 62.5% of variation in cyber incident severity. This demonstrates that latent representations extracted from unstructured incident descriptions contain substantial predictive information.
 
-## Explainable AI
+## Explainable AI 
 
 SHAP was used to:
 
@@ -254,7 +257,7 @@ Data Collection → NLP Feature Engineering → Statistical Analysis → Machine
 - Spearman Correlations
 - Multiple Testing Correction
 
-### Explainable AI
+### Explainable AI Skills
 
 - SHAP
 - Feature Importance Analysis
