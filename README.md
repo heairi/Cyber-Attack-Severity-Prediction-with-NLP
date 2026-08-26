@@ -190,26 +190,30 @@ Generated outputs include:
 - Model comparison visualizations
 
 ## Project Structure
-project/
 
+```text
+project/
 ├── data/
-    ├── eurepoc_dataset
-    ├── topic model 
+│   ├── eurepoc_dataset/
+│   └── topic_model/
+│
 ├── model_output/
-│   ├── shap
-│   ├── figures
-│   ├── models
+│   ├── shap/
+│   ├── figures/
+│   └── models/
+│
 ├── notebooks/
 │   ├── build_BERTopic_model.ipynb
-│   ├── cyber_incident_eda.ipynb
-
+│   └── cyber_incident_eda.ipynb
+│
 ├── src/
 │   ├── nlp_functions.py
 │   └── ml_functions.py
-
+│
 ├── cyber_incident_ml.py
 ├── requirements.txt
 └── README.md
+```
 
 ## Key Findings
 BERTopic-derived cyber operation categories explained 62.5% of variance in cyber incident severity using NLP features alone.
@@ -283,6 +287,6 @@ Data Collection → NLP Feature Engineering → Statistical Analysis → Machine
 
 ## Author
 
-Heather Iriye
+Heather Iriye, PhD 
 
 Data Science | NLP | Machine Learning | Cybersecurity Analytics
