@@ -132,19 +132,6 @@ run notebooks/cyber_incident_eda.ipynb
 
 Using the latent topics extracted from incident descriptions (see build_BERTopic_model.ipynb), are specific types of cyber attacks linked to differences in terms of societal impact and political responses? 
 
-This notebook answers the following questions: 
-Q1: What operational patterns connect initiator countries, cyber operation types, and receiver countries?
-
-Q2: Which operational categories are associated with the most severe incidents?
-
-Q3: What types of cyber operations provoke political responses?
-
-Q4: How have trends in cyber operations evolved over time?
-
-Q5: Which countries are targeted by which types of cyber operations?
-
-Q6: Are there patterns in the types of cyber attacks used by initiator countries?
-
 ## Machine Learning
 From the repository root, run: 
 cyber_incident_ml.py
