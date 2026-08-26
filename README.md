@@ -14,7 +14,7 @@
         - [Machine Learning Framework](#machine-learning-framework)
         - [Results](#results)
         - [Interpretation](#interpretation)
-    - [Explainable AI](#exlplainable-ai)
+    - [Explainable AI](#explainable-ai) 
     - [Project Structure](#project-structure)
 - [Key Findings](#key-findings)
 - [Why Recruiters Should Care](#why-recruiters-should-care)
