@@ -199,25 +199,25 @@ Generated outputs include:
 ```text
 project/
 ├── data/
-│   ├── eurepoc_dataset/
-│   └── topic_model/
+│   ├── eurepoc_dataset/                # Processed dataset with latent topics
+│   └── topic_model/                    # BERTopic model, topic assignments, and topic info
 │
 ├── model_output/
-│   ├── shap/
-│   ├── figures/
-│   └── models/
+│   ├── shap/                           # SHAP plots for Models A-C
+│   ├── figures/                        # Regression scatterplots & model comparison stacked bar chart
+│   └── models/                         # Pickled Models A-C 
 │
 ├── notebooks/
-│   ├── build_BERTopic_model.ipynb
-│   └── cyber_incident_eda.ipynb
+│   ├── build_BERTopic_model.ipynb      # NLP topic modeling 
+│   └── cyber_incident_eda.ipynb        # Links between latent cyber operation topics and societal impact
 │
 ├── src/
-│   ├── nlp_functions.py
-│   └── ml_functions.py
+│   ├── nlp_functions.py                # Functions used to perform NLP topic modeling
+│   └── ml_functions.py                 # Functions used to run machine learning pipeline
 │
-├── cyber_incident_ml.py
-├── requirements.txt
-└── README.md
+├── cyber_incident_ml.py                # Machine learning pipeline
+├── requirements.txt                    # Full project Python environment
+└── README.md                            
 ```
 
 ## Key Findings
@@ -293,6 +293,6 @@ Data Collection → NLP Feature Engineering → Statistical Analysis → Machine
 
 ## Author
 
-Heather Iriye, PhD 
+**Heather Iriye, PhD** 
 
 Data Science | NLP | Machine Learning | Cybersecurity Analytics
