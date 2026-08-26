@@ -4,6 +4,10 @@
 
 - [Overview](#overview)
 - [Business Problem](#business-problem)
+- [Why Recruiters Should Care](#why-recruiters-should-care)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [How to Run the Project](#how-to-run-the-project)
 - [Project Components](#project-components)
     - [NLP Topic Modeling Pipeline](#1-nlp-topic-modeling-pipeline)
     - [Exploratory Data Analysis](#2-exploratory-data-analysis)
@@ -15,9 +19,7 @@
         - [Results](#results)
         - [Interpretation](#interpretation)
     - [Explainable AI](#explainable-ai) 
-    - [Project Structure](#project-structure)
 - [Key Findings](#key-findings)
-- [Why Recruiters Should Care](#why-recruiters-should-care)
 - [Technical Skills Demonstrated](#technical-skills-demonstrated)
     - [Machine Learning](#machine-learning)
     - [Natural Language Processing](#natural-language-processing)
@@ -45,6 +47,83 @@ This project highlights skills directly applicable to Data Scientist, Machine Le
 ## Business Problem
 
 Can transformer-based topic modeling extract meaningful operational categories from cyber incident descriptions, and can those latent topics be used to understand and predict incident impact?
+
+## Why Recruiters Should Care
+
+This project demonstrates the ability to:
+
+- Build production-style NLP pipelines
+- Transform unstructured text into predictive features
+- Apply machine learning to a real-world cybersecurity problem
+- Perform statistical analysis alongside predictive modeling
+- Explain model behavior using SHAP
+- Communicate findings through data storytelling and visualization
+
+The project spans the full data science lifecycle:
+
+Data Collection → NLP Feature Engineering → Statistical Analysis → Machine Learning → Explainability → Business Interpretation
+
+## Getting Started
+The project was developed in **GitHub Codespaces** using **Python 3.14.6**. To run the project outside of codespaces: 
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/heairi/eurepoc_cyber_security.git
+cd eurepoc_cyber_security
+```
+### 2. Create and activate a virtual environment
+
+Linux or macOS:
+
+```bash
+python3.11 -m venv venv
+source venv/bin/activate
+```
+
+Windows PowerShell:
+
+```powershell
+py -3.11 -m venv venv
+.\venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+`requirements.txt` reproduces the full development environment and includes packages used by exploratory notebooks and alternative models. 
+
+## Project Structure
+
+```text
+project/
+├── data/
+│   ├── eurepoc_dataset/                # Processed dataset with latent topics
+│   └── topic_model/                    # BERTopic model, topic assignments, and topic info
+│
+├── model_output/
+│   ├── shap/                           # SHAP plots for Models A-C
+│   ├── figures/                        # Regression scatterplots & model comparison stacked bar chart
+│   └── models/                         # Pickled Models A-C 
+│
+├── notebooks/
+│   ├── build_BERTopic_model.ipynb      # NLP topic modeling 
+│   └── cyber_incident_eda.ipynb        # Links between latent cyber operation topics and societal impact
+│
+├── src/
+│   ├── nlp_functions.py                # Functions used to perform NLP topic modeling
+│   └── ml_functions.py                 # Functions used to run machine learning pipeline
+│
+├── cyber_incident_ml.py                # Machine learning pipeline
+├── requirements.txt                    # Full project Python environment
+└── README.md                            
+```
+
+## How to Run the Project
+
 
 ## Project Components
 
@@ -194,32 +273,6 @@ Generated outputs include:
 - Actual vs predicted diagnostics
 - Model comparison visualizations
 
-## Project Structure
-
-```text
-project/
-├── data/
-│   ├── eurepoc_dataset/                # Processed dataset with latent topics
-│   └── topic_model/                    # BERTopic model, topic assignments, and topic info
-│
-├── model_output/
-│   ├── shap/                           # SHAP plots for Models A-C
-│   ├── figures/                        # Regression scatterplots & model comparison stacked bar chart
-│   └── models/                         # Pickled Models A-C 
-│
-├── notebooks/
-│   ├── build_BERTopic_model.ipynb      # NLP topic modeling 
-│   └── cyber_incident_eda.ipynb        # Links between latent cyber operation topics and societal impact
-│
-├── src/
-│   ├── nlp_functions.py                # Functions used to perform NLP topic modeling
-│   └── ml_functions.py                 # Functions used to run machine learning pipeline
-│
-├── cyber_incident_ml.py                # Machine learning pipeline
-├── requirements.txt                    # Full project Python environment
-└── README.md                            
-```
-
 ## Key Findings
 BERTopic-derived cyber operation categories explained 62.5% of variance in cyber incident severity using NLP features alone.
 Structured cyber conflict variables achieved an R² of 0.76 when predicting impact scores.
@@ -228,21 +281,6 @@ Disruption operations triggered the strongest political responses.
 State-linked actors were strongly associated with intrusion and cyber espionage campaigns.
 Cyber conflict has become increasingly dominated by financially motivated operations over time.
 SHAP analysis identified the operational characteristics most strongly associated with severe cyber incidents.
-
-## Why Recruiters Should Care
-
-This project demonstrates the ability to:
-
-- Build production-style NLP pipelines
-- Transform unstructured text into predictive features
-- Apply machine learning to a real-world cybersecurity problem
-- Perform statistical analysis alongside predictive modeling
-- Explain model behavior using SHAP
-- Communicate findings through data storytelling and visualization
-
-The project spans the full data science lifecycle:
-
-Data Collection → NLP Feature Engineering → Statistical Analysis → Machine Learning → Explainability → Business Interpretation
 
 ## Technical Skills Demonstrated
 
