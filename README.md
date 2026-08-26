@@ -10,6 +10,15 @@
     - [Machine Learning: Predicting Cyber Incident Severity](#3-machine-learning-predicting-cyber-incident-severity)
         - [Model A: Structured Features](#model-a-structured-features)
         - [Model B: NLP Derived Features](#model-b-nlp-derived-features)
+        - [Model C: Combined Features](#model-c-combined-features)
+        - [Machine Learning Framework](#machine-learning-framework)
+        - [Results](#results)
+        - [Interpretation](#interpretation)
+    - [Explainable AI](#exlplainable-ai)
+    - [Project Structure](#project-structure)
+- [Key Findings](#key-findings)
+- [Why Recruiters Should Care](#why-recruiters-should-care)
+- [Technical Skills Demonstrated](#technical-skills-demonstrated)
 
 
 
