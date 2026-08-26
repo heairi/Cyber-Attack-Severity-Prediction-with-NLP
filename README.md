@@ -19,8 +19,13 @@
 - [Key Findings](#key-findings)
 - [Why Recruiters Should Care](#why-recruiters-should-care)
 - [Technical Skills Demonstrated](#technical-skills-demonstrated)
-
-
+    - [Machine Learning](#machine-learning)
+    - [Natural Language Processing](#natural-language-processing)
+    - [Software Engineering](#software-engineering)
+    - [Explainable AI Skills](#explainable-ai-skills)
+    - [Statistics](#statistics)
+    - [Data Visualization](#data-visualization)
+ - [Author](#author)
 
 ## Overview
 
@@ -257,17 +262,24 @@ Data Collection → NLP Feature Engineering → Statistical Analysis → Machine
 - KeyBERT
 - spaCy
 
+### Software Engineering
+
+- Modular Python Code
+- Reusable NLP Pipelines
+- Reproducible Research Workflows
+- Model Serialization
+
+### Explainable AI Skills
+
+- SHAP
+- Feature Importance Analysis
+
 ### Statistics
 
 - Kruskal-Wallis Tests
 - Dunn Post-hoc Tests
 - Spearman Correlations
 - Multiple Testing Correction
-
-### Explainable AI Skills
-
-- SHAP
-- Feature Importance Analysis
 
 ### Data Visualization
 
@@ -278,12 +290,6 @@ Data Collection → NLP Feature Engineering → Statistical Analysis → Machine
 - Seaborn
 - Matplotlib
 
-### Software Engineering
-
-- Modular Python Code
-- Reusable NLP Pipelines
-- Reproducible Research Workflows
-- Model Serialization
 
 ## Author
 
