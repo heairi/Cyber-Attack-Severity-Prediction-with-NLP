@@ -116,7 +116,47 @@ project/
 ```
 
 ## How to Run the Project
+## NLP Topic Modeling
+run notebooks/build_BERTopic_model.ipynb
 
+The notebook will: 
+- Download the eurepoc dyadic dataset
+- Clean incident descriptions
+- Generate sentence embeddings (Sentence-BERT)
+- Distill topics into readable topic names and groups
+- Save model and topic modelling output
+*Note: To obtain the same topic modeling results, the environment must be the exact same as during development (i.e., pip install -r requirements.txt)
+
+## Latent Cyber Operation Topic EDA
+run notebooks/cyber_incident_eda.ipynb
+
+Using the latent topics extracted from incident descriptions (see build_BERTopic_model.ipynb), are specific types of cyber attacks linked to differences in terms of societal impact and political responses? 
+
+This notebook answers the following questions: 
+Q1: What operational patterns connect initiator countries, cyber operation types, and receiver countries?
+
+Q2: Which operational categories are associated with the most severe incidents?
+
+Q3: What types of cyber operations provoke political responses?
+
+Q4: How have trends in cyber operations evolved over time?
+
+Q5: Which countries are targeted by which types of cyber operations?
+
+Q6: Are there patterns in the types of cyber attacks used by initiator countries?
+
+## Machine Learning
+From the repository root, run: 
+cyber_incident_ml.py
+
+The script will:
+- load the original eurepoc dyadic dataset
+- load the processed dataset with the latent cyber operation categories extracted using NLP
+- create the feature and target vectors for Models A-C
+- train and test Models A-C
+- generate regression scatterplots & SHAP feature importance plots
+- compare model metrics (MAE, RMSE, R²)
+- save model output
 
 ## Project Components
 
