@@ -1,5 +1,21 @@
 # Cyber Incident Intelligence, Topic Modeling, and Severity Prediction
 
+## Table of Contents
+
+- #overview
+- #business-problem
+- [Project Components](#projectLP Topic Modeling Pipeline](#1-nlp-topic-modeling-pipeline)
+    - [Extracted Cyber Operation Types](# [3. Machine Learning: Predicting Cyber Incident Severity](#3-machine-learning-predicting-cyber-incident-severity)
+    - [Model A: Structured: Combined Features- #machine-learning-framework
+- #results
+  - [Interpretation
+- [Explainable-ai
+- #project-structure
+- #key-findings
+- [Why Recruiters Should Care](#why-hnical Skills Demonstrated](#technical-skills-demonstrated-learningage Processing](#natural-languagestatisticsable AI](#ex- #data-visualization
+  - #software-engineering
+- #author
+
 ## Overview
 
 This project demonstrates an end-to-end data science workflow that combines Natural Language Processing (NLP), unsupervised learning, statistical analysis, explainable AI, and machine learning to analyze global cyber conflict.
@@ -167,6 +183,52 @@ Generated outputs include:
 - Actual vs predicted diagnostics
 - Model comparison visualizations
 
+## Project Structure
+project/
+
+├── data/
+    ├── eurepoc_dataset
+    ├── topic model 
+├── model_output/
+│   ├── shap
+│   ├── figures
+│   ├── models
+├── notebooks/
+│   ├── build_BERTopic_model.ipynb
+│   ├── cyber_incident_eda.ipynb
+
+├── src/
+│   ├── nlp_functions.py
+│   └── ml_functions.py
+
+├── cyber_incident_ml.py
+├── requirements.txt
+└── README.md
+
+## Key Findings
+BERTopic-derived cyber operation categories explained 62.5% of variance in cyber incident severity using NLP features alone.
+Structured cyber conflict variables achieved an R² of 0.76 when predicting impact scores.
+Financially motivated operations and data exposure incidents generated the highest societal impacts.
+Disruption operations triggered the strongest political responses.
+State-linked actors were strongly associated with intrusion and cyber espionage campaigns.
+Cyber conflict has become increasingly dominated by financially motivated operations over time.
+SHAP analysis identified the operational characteristics most strongly associated with severe cyber incidents.
+
+## Why Recruiters Should Care
+
+This project demonstrates the ability to:
+
+- Build production-style NLP pipelines
+- Transform unstructured text into predictive features
+- Apply machine learning to a real-world cybersecurity problem
+- Perform statistical analysis alongside predictive modeling
+- Explain model behavior using SHAP
+- Communicate findings through data storytelling and visualization
+
+The project spans the full data science lifecycle:
+
+Data Collection → NLP Feature Engineering → Statistical Analysis → Machine Learning → Explainability → Business Interpretation
+
 ## Technical Skills Demonstrated
 
 ### Machine Learning
@@ -212,21 +274,6 @@ Generated outputs include:
 - Reusable NLP Pipelines
 - Reproducible Research Workflows
 - Model Serialization
-
-## Why Recruiters Might Care
-
-This project demonstrates the ability to:
-
-- Build production-style NLP pipelines
-- Transform unstructured text into predictive features
-- Apply machine learning to a real-world cybersecurity problem
-- Perform statistical analysis alongside predictive modeling
-- Explain model behavior using SHAP
-- Communicate findings through data storytelling and visualization
-
-The project spans the full data science lifecycle:
-
-Data Collection → NLP Feature Engineering → Statistical Analysis → Machine Learning → Explainability → Business Interpretation
 
 ## Author
 
