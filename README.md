@@ -8,7 +8,7 @@
     - [NLP Topic Modeling Pipeline](#1-nlp-topic-modeling-pipeline)
     - [Exploratory Data Analysis](#2-exploratory-data-analysis)
     - [Machine Learning: Predicting Cyber Incident Severity](#3-machine-learning-predicting-cyber-incident-severity)
-          - [Model A: Structured Features](#model-a-structured-features)
+               - [Model A: Structured Features](#model-a-structured-features)
 
 
 
