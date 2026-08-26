@@ -9,6 +9,7 @@
     - [Exploratory Data Analysis](#2-exploratory-data-analysis)
     - [Machine Learning: Predicting Cyber Incident Severity](#3-machine-learning-predicting-cyber-incident-severity)
         - [Model A: Structured Features](#model-a-structured-features)
+        - [Model B: NLP Derived Features](#model-b-nlp-derived-features)
 
 
 
