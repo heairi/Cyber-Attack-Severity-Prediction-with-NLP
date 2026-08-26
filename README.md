@@ -3,20 +3,9 @@
 ## Table of Contents
 
 - [Overview](#overview)
-- #business-problem
-- [Project Components](#projectp-topic-modeling-pipeline
-  - [Extracted Cyber Operation Types](#extracted-cyberData Analysis](#2-exploratory-data-analysisicting Cyber Incident Severity](#3-machine-learning-tured-features
-    - [Model B-nlp-derived-features
-    - [Model-c-combined-features
-- [Machine learning-framework
-- [Results](#resultsrpretation](#interpretationI](#explaint Structure](#projectndings](#keyy Recruiters Should Care
-- [Technical Skills Demonstrated]( - [Machine Learning
-  - [Natural Language-processing
-  - [statistics
-  - [Explainable-ai-skills
-  - [data-visualization
-  - #software-engineering
-- #author
+- [Business Problem](#business-problem)
+- [Project Components](#project-components)
+
 
 
 ## Overview
