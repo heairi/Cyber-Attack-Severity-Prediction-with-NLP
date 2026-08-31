@@ -160,7 +160,7 @@ save_actual_vs_predicted_plot(
     y_test_A,
     y_pred_A,
     "Model A XGBoost Regression",
-    "model_output/impact_score_modelA_XGBoost_scatterplot_existing_predictors.png"
+    "model_output/figures/impact_score_modelA_XGBoost_scatterplot_existing_predictors.png"
 )
 
 # SHAP
@@ -168,7 +168,7 @@ save_shap_summary(
     model=xgbA,
     X=X_train_A,
     title="Model A SHAP Values",
-    filepath="model_output/impact_score_modelA_XGBoost_existing_predictors_SHAP.png"
+    filepath="model_output/shap/impact_score_modelA_XGBoost_existing_predictors_SHAP.png"
 )
 
 # ==============================================================================
@@ -236,7 +236,7 @@ save_actual_vs_predicted_plot(
     y_test_B,
     y_pred_B,
     "Model B XGBoost Regression",
-    "model_output/impact_score_modelB_XGBoost_scatterplot_topic_predictors.png"
+    "model_output/figures/impact_score_modelB_XGBoost_scatterplot_topic_predictors.png"
 )
 
 # SHAP
@@ -255,7 +255,7 @@ save_shap_summary(
     model=xgbB,
     X=X_train_B,
     title="Model B SHAP Values",
-    filepath="model_output/impact_score_modelB_XGBoost_latent_topic_predictors_SHAP.png",
+    filepath="model_output/shap/impact_score_modelB_XGBoost_latent_topic_predictors_SHAP.png",
     rename_dict=topic_rename
 )
 
@@ -343,7 +343,7 @@ save_actual_vs_predicted_plot(
     y_test_C,
     y_pred_C,
     "Model C XGBoost Regression",
-    "model_output/impact_score_modelC_XGBoost_scatterplot_combined_predictors.png"
+    "model_output/figures/impact_score_modelC_XGBoost_scatterplot_combined_predictors.png"
 )
 
 # SHAP
@@ -351,7 +351,7 @@ save_shap_summary(
     model=xgbC,
     X=X_train_C,
     title="Model C SHAP Values",
-    filepath="model_output/impact_score_modelC_XGBoost_combined_predictors_SHAP.png",
+    filepath="model_output/shap/impact_score_modelC_XGBoost_combined_predictors_SHAP.png",
     rename_dict=topic_rename
 )
 
@@ -369,12 +369,12 @@ results_table = compare_models(models)
 plot_model_comparison_panels(
     results_table,
     title="Impact Score Prediction Performance",
-    filepath="model_output/xgboost_model_comparison_panels.png"
+    filepath="model_output/figures/xgboost_model_comparison_panels.png"
 )
 
 save_model_results(
     results_table,
-    "model_output/xgboost_model_comparison.csv"
+    "model_output/models/xgboost_model_comparison.csv"
 )
 
 save_models({
