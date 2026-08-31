@@ -10,7 +10,7 @@
 - [How to Run the Project](#how-to-run-the-project)
 - [Project Components](#project-components)
     - [NLP Topic Modeling Pipeline](#1-nlp-topic-modeling-pipeline)
-    - [Exploratory Data Analysis](#2-exploratory-data-analysis)
+    - [Exploratory Data Analysis (EDA)](#2-exploratory-data-analysis)
     - [Machine Learning: Predicting Cyber Incident Severity](#3-machine-learning-predicting-cyber-incident-severity)
 - [Key Findings](#key-findings)
 - [Technical Skills Demonstrated](#technical-skills-demonstrated)
@@ -105,6 +105,8 @@ project/
 ├── notebooks/
 │   ├── build_BERTopic_model.ipynb      # NLP topic modeling 
 │   └── cyber_incident_eda.ipynb        # Links between latent cyber operation topics and societal impact
+│
+├── visualizations/                    # Sankey plot, heatmaps, area plots, line plots, and box plots from EDA
 │
 ├── src/
 │   ├── nlp_functions.py                # Functions used to perform NLP topic modeling
