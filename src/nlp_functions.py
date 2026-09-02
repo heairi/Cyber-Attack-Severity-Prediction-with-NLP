@@ -8,6 +8,7 @@ from umap import UMAP
 from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 import spacy
+import torch
 
 # ==============================================================================
 # CLEAN DATA 
@@ -66,6 +67,32 @@ def remove_geo_entities(text,nlp):
 # ==============================================================================
 # BERT
 # ==============================================================================
+# Override the MPS deserializer to map to CPU in non-Mac environments
+def _mps_override(obj, location):
+    """
+    Deserialization monkey-patch for PyTorch model loading across cross-platform environments.
+
+    Redirects PyTorch storage tensors serialized on Apple Silicon (MPS/Metal Performance Shaders) 
+    to system CPU memory. This resolves runtime errors when loading Mac-saved models inside 
+    non-macOS environments (e.g., Linux containers or GitHub Codespaces).
+
+    Parameters
+    ----------
+    obj : torch.UntypedStorage
+        The raw uninitialized storage object managed by PyTorch's legacy deserializer.
+    location : str
+        The target hardware location specified in the pickled file (e.g., "mps:0").
+
+    Returns
+    -------
+    torch.UntypedStorage or None
+        A CPU-mapped storage object if `location` starts with "mps", otherwise None 
+        to pass handling back to the remaining PyTorch package registry functions.
+    """
+    if location.startswith("mps"):
+        return obj.cpu()
+    return None
+
 def generate_embeddings(
     documents,
     model_name="all-MiniLM-L6-v2",
