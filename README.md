@@ -57,7 +57,7 @@ The project spans the full data science lifecycle:
 Data Collection → NLP Feature Engineering → Statistical Analysis → Machine Learning → Explainability → Business Interpretation
 
 ## Getting Started
-The project was developed in **GitHub Codespaces** using **Python 3.14.6**. If you're running the project in codepaces, skip to steps 2 & 3. To run the project outside of codespaces: 
+The project was developed in **Visual Studio Code 1.135.0** using **Python 3.14.6**. If you're running the project in **GitHub Codespaces**, skip to steps 2 & 3. To run the project outside of codespaces: 
 
 ### 1. Clone the repository
 
