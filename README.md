@@ -57,7 +57,8 @@ The project spans the full data science lifecycle:
 Data Collection → NLP Feature Engineering → Statistical Analysis → Machine Learning → Explainability → Business Interpretation
 
 ## Getting Started
-The project was developed in **GitHub Codespaces** using **Python 3.14.6**. To run the project outside of codespaces: 
+The project was developed in **GitHub Codespaces** using **Python 3.14.6**. If you're running the project in codepaces, skip to steps 2 & 3. To run the project outside of codespaces: 
+
 ### 1. Clone the repository
 
 ```bash
@@ -69,14 +70,14 @@ cd eurepoc_cyber_security
 Linux or macOS:
 
 ```bash
-python3.11 -m venv venv
+python -m venv venv
 source venv/bin/activate
 ```
 
 Windows PowerShell:
 
 ```powershell
-py -3.11 -m venv venv
+py -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
 
