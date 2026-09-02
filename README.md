@@ -177,7 +177,7 @@ Raw Incident Descriptions
 
 ### 2. Exploratory Data Analysis
 
-Notebook: `exploratory_cyber_operations_analysis.ipynb`
+Notebook: `cyber_incident_eda.ipynb`
 
 Research Questions:
 
